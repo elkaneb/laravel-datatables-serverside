@@ -73,6 +73,7 @@
 
         <main class="py-4">
             @yield('content')
+            @include('layouts._modal')
         </main>
     </div>
 

@@ -7,7 +7,10 @@
             <div class="card">
                 <div class="card-header">
                     Dashboard
-                    <button type="button" title="export" class="btn btn-success btn-sm float-right export"><i class="far fa-file-excel"></i> Export</button>
+                    <div class="float-right">
+                        <button type="button" title="export" class="btn btn-success btn-sm export"><i class="far fa-file-excel"></i> Export</button>
+                        <button type="button" url="{{ route('users.create') }}" title="add new user" class="btn btn-light btn-sm add"><i class="far fa-address-card"></i> Add</a>
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -41,15 +44,27 @@
 <!-- Fontawesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
+<style>
+    tr td:last-child {
+        width: 0.1%;
+        white-space:nowrap;
+    }
+</style>
+
 @endpush
 
 @push('scripts')
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 <!-- DataTables -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<!-- Bootstrap JavaScript -->
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
 <!-- Sweetalert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.4/dist/sweetalert2.all.min.js"></script>
 
@@ -113,6 +128,23 @@ $(document).on('click', '.delete', function(){
             });
         }
     })
+});
+
+// add btn
+$(document).on('click', '.add', function(event){
+    //event.preventDefault();
+    var me = $(this), title = me.attr('title'), url = me.attr('url');
+
+    $('.modal-title').text(title);
+
+    $.ajax({
+        url: url,
+        dataType: 'html',
+        success: function (response) {
+            $('.modal-body').html(response);
+            $('.modal').modal('show')
+        }
+    });
 });
 </script>
 
